@@ -34,14 +34,39 @@ public class ArrayTest {
     @Test
     public void test0610(){
         int[][] ary = {
+                {},
+                {1},
+                {2,3,2},
                 {1,2,3,1},
-                {2,7,9,3,1}
+                {3,0,0,2},
+                {2,7,9,3,1},
+//                {10,1,10,100},
+//                {10,1,10,100,200},
+//                {10,1,10,100,200,200},
         };
         for (int[] a : ary) {
-            int rob = leetCode0610.rob(a);
-            System.out.println(rob);
+//            int rob = leetCode0610.rob(a);
+//            int i = leetCode0610.robOpt(a);
+            int i = leetCode0610.robII(a);
+            System.out.println(i);
+//            System.out.println(rob == i);
         }
     }
+    @Test
+    public void test0610_1(){
+        int[][] ary = {
+                {},
+                {1},
+                {1,2,1,2,3},
+                {1,2,1,3,4},
+        };
+        int[] aK = {1,1,2,3};
+        for (int i = 0; i < ary.length; i++) {
+            int ans = leetCode0610.subarraysWithKDistinct(ary[i],aK[i]);
+            System.out.println(ans);
+        }
+    }
+
 
     @Test
     public void testMod(){
