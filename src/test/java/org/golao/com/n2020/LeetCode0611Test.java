@@ -65,6 +65,7 @@ public class LeetCode0611Test {
                 {1},
                 {1,1,1,1},
                 {-1,-1,-1,-1},
+                {5,4,3,2,1},
         };
 
         int[][] ans = {
@@ -73,6 +74,7 @@ public class LeetCode0611Test {
                 {-1},
                 {-1,-1,-1,-1},
                 {-1,-1,-1,-1},
+                {-1,5,5,5,5},
         };
 
         for (int i = 0; i < ary1.length; i++) {

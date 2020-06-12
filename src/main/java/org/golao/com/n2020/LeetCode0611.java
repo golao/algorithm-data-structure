@@ -116,6 +116,15 @@ public class LeetCode0611 {
     /**
      * https://leetcode-cn.com/problems/next-greater-element-ii/
      * 难度： medium
+     * 题解： 1. 一开始理解错了环的含义，在实现上成了从左向右搜索，然后将剩余的值从右向左搜索(见git 历史版本)
+     *        2. 提交后经过输入 [5,4,3,2,1] 的报错后，我知道问题所在了。核心就是找到环的边界：数组的最后一个
+     *           最大值 max(nums[i]) ,从这个元素的后一个位置作为起点，进行遍历。
+     *        3. nums[i] 与栈顶元素比较，如果比栈顶元素大，则栈顶元素出栈，nums[i] 即为出栈元素的下一个最大值
+     *           重复该步骤，直到栈为空，或者nums[i] 小于栈顶元素
+     *        4. nums[i] 小于等于栈顶元素，则将nums[i] 入栈
+     *        5. 时间复杂度 O(n) ,一次for循环 找出最后一个最大值的下标，一次for完成查找 共 2n
+     *        6. 空间复杂度 O(n) , 用了一个栈维护待查找元素
+     *
      * @param nums
      * @return
      */
@@ -125,24 +134,26 @@ public class LeetCode0611 {
         }
         int[] ans = new int[nums.length];
         Arrays.fill(ans, -1);
-        int[] back = new int[nums.length];
-        Deque<Integer> deque = new LinkedList<>();
-        for (int i = 0; i < nums.length; i++) {
-             while (!deque.isEmpty() && nums[i] > nums[deque.getFirst()]){
-                 int index = deque.removeFirst();
-                 ans[index] = nums[i];
-             }
-             deque.addFirst(i);
-        }
-        Deque<Integer> deque2 = new LinkedList<>();
-        while (!deque.isEmpty()){
-            while (!deque2.isEmpty() && nums[deque.getFirst()] > nums[deque2.getFirst()]) {
-                Integer index = deque2.removeFirst();
-                ans[index] = nums[deque.getFirst()];
+        int lastMaxIndex = 0;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] >= nums[lastMaxIndex]){
+                lastMaxIndex = i;
             }
-            deque2.addFirst(deque.removeFirst());
         }
+        Deque<Integer> deque = new LinkedList<>();
+        findMaxElement(deque, nums, lastMaxIndex + 1, nums.length, ans);
+        findMaxElement(deque, nums, 0, lastMaxIndex + 1, ans);
         return ans;
+    }
+
+    private void findMaxElement(Deque<Integer> deque, int[] nums, int start, int end, int[] ans){
+        for (int i = start; i < end; i++) {
+            while (!deque.isEmpty() && nums[i] > nums[deque.getFirst()]){
+                int index = deque.removeFirst();
+                ans[index] = nums[i];
+            }
+            deque.addFirst(i);
+        }
     }
 
 
