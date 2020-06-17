@@ -1,6 +1,8 @@
 package org.golao.com.n2020;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class LeetCode0610 {
@@ -105,30 +107,44 @@ public class LeetCode0610 {
      * @return
      */
     public int subarraysWithKDistinct(int[] A, int K) {
-        if (A == null || A.length == 0 || A.length < K){
-            return 0;
-        }
+        Map<Integer,Integer> map1 = new HashMap<>();
+        Map<Integer,Integer> map2 = new HashMap<>();
+        int realSize1 = 0;
+        int rs2 = 0;
         int ans = 0;
-        Set<Integer> set = new HashSet<>();
-        int start = 0;
-        for (int i = 0; i < A.length;) {
-            set.add(A[i]);
-            if (set.size() < K) {
-                i++;
-                continue;
+        int L1 = 0, L2 = 0;
+        for (int i = 0; i < A.length; i++) {
+            boolean add1 = update(map1,A[i],true);
+            if (add1){
+                realSize1++;
             }
-            ans++;
-            int j = i + 1;
-            while(j < A.length && set.contains(A[j])){
-                ans++;
-                j++;
+            boolean add2 = update(map2,A[i],true);
+            if (add2){
+                rs2++;
             }
-            set.clear();
-            start++;
-            i = start;
+            while (realSize1 > K){
+                boolean remove = update(map1, A[L1++], false);
+                realSize1 = remove ? realSize1 - 1 : realSize1;
+            }
+            while (rs2 >= K){
+                boolean remove = update(map2, A[L2++],false);
+                rs2 = remove ? rs2 - 1 : rs2;
+            }
+            ans += L2 - L1;
         }
         return ans;
     }
+
+    private boolean update(Map<Integer,Integer> map,int a,boolean add){
+        Integer times = map.getOrDefault(a, 0);
+        if (add){
+            map.put(a, times+1);
+        }else {//remove
+            map.put(a,times-1);
+        }
+        return add ? times == 0 : times == 1;
+    }
+
 
     public static void main(String[] args) {
         LeetCode0610 leetCode0610 = new LeetCode0610();
