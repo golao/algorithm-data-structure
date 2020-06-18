@@ -39,7 +39,10 @@ public class LeetCode0618Test {
         };
         for (int i = 0; i < input.length; i++) {
             TreeNode node = leetCode0617.recoverFromPreorder(input[i]);
+            TreeNode node2 = leetCode0617.recoverFromPreorderLeetCode(input[i]);
             Assert.assertEquals(output[i], node.toString());
+            System.out.println(node2);
+            Assert.assertEquals(node, node2);
             System.out.println(node.toString());
         }
 

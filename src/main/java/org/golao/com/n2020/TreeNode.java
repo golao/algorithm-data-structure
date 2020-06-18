@@ -29,6 +29,32 @@ public class TreeNode {
 //        node.right.right = new TreeNode(7);
         return node;
     }
+
+    @Override
+    public boolean equals(Object node){
+        if (node == null){
+            return false;
+        }
+        if (!(node instanceof TreeNode)){
+            return false;
+        }
+        return equals(this, (TreeNode) node);
+    }
+    private static boolean equals(TreeNode node1, TreeNode node2){
+        if (node1 == null && node2 == null){
+            return true;
+        }
+        if (node1 == null || node2 == null){
+            return false;
+        }
+        if (node1.val != node2.val){
+            return false;
+        }
+        boolean left = equals(node1.left, node2.left);
+        boolean right = equals(node1.right, node2.right);
+        return left && right;
+    }
+
     public static void innerOrderPrint(TreeNode node){
         if (node == null){
             return;
