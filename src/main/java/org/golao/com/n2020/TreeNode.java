@@ -32,4 +32,9 @@ public class TreeNode {
         System.out.print(node.val);
         innerOrderPrint(node.right);
     }
+    
+    public static TreeNode parseStr(String leetcodeTreeSeq){
+
+        return null;
+    }
 }
