@@ -1,5 +1,8 @@
 package org.golao.com.n2020;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class LeetCode0617 {
     /**
      * https://leetcode-cn.com/problems/best-sightseeing-pair/
@@ -27,8 +30,48 @@ public class LeetCode0617 {
      * @return
      */
     public TreeNode recoverFromPreorder(String S) {
+        String[] split = S.split("\\-+");
+        if (split.length == 1){
+            return new TreeNode(Integer.parseInt(split[0]));
+        }
+        Queue<Entry> queue = new LinkedList<>();
+        int level = 0;
+        int point = 0;
+        for (int i = 0; i < split.length; i++) {
+            while (point < S.length() && S.charAt(point) == '-'){
+                level++;
+                point++;
+            }
+            queue.add(new Entry(Integer.parseInt(split[i]), level));
+            level = 0;
+            while (point < S.length() && S.charAt(point) != '-'){
+                point++;
+            }
+        }
+        return parseTree(queue);
+    }
+    private TreeNode parseTree(Queue<Entry> queue){
+        Entry entry = queue.remove();
+        TreeNode node = new TreeNode(entry.number);
+        if (queue.isEmpty() || queue.peek().level <= entry.level) {
+            return node;
+        }
+        node.left = parseTree(queue);
+        if (queue.isEmpty() || queue.peek().level <= entry.level){
+            return node;
+        }
+        node.right = parseTree(queue);
+        return node;
+    }
 
-        return null;
+
+    class Entry{
+        int number;
+        int level;
+        Entry(int num, int level){
+            this.level = level;
+            this.number = num;
+        }
     }
 
 
