@@ -19,5 +19,17 @@ public class LeetCode0617 {
         return dp1;
     }
 
-    
+    /**
+     * 2020.06.18
+     * https://leetcode-cn.com/problems/recover-a-tree-from-preorder-traversal/
+     * hard
+     * @param S
+     * @return
+     */
+    public TreeNode recoverFromPreorder(String S) {
+
+        return null;
+    }
+
+
 }
