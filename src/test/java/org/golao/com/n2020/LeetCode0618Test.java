@@ -47,4 +47,26 @@ public class LeetCode0618Test {
         }
 
     }
+
+    @Test
+    public void testMaxDotProduct(){
+        int[][] nums1 = {
+                {5,-4,-3},
+                {2,1,-2,5},
+                {-1,-1},
+                {3,-2}
+        };
+        int[][] nums2 = {
+                {-4,-3,0,-4,2},
+                {3,0,-6},
+                {1,1},
+                {2,-6,7}
+        };
+        int[] ans = {28,18,-1,21};
+        for (int i = 0; i < ans.length; i++) {
+            int maxDotProduct = leetCode0617.maxDotProduct(nums1[i], nums2[i]);
+            Assert.assertEquals(ans[i], maxDotProduct);
+        }
+        // Integer.MIN_VALUE 再加负数会溢出，变成正的了
+    }
 }
