@@ -11,12 +11,27 @@ public class LeetCode0410 {
      * 1. 这道题收获很多，涉及logN 复杂度的，用了分治法，去看并理解了归并排序
      * 2. 官方题解中的 m >= n ，结合代码才明白，这是程序先决条件，避免发生 j 为负数
      * 3. halfLen = (m + n + 1) / 2   -- 在偶数时，+ 1 不起作用;奇数时，partA部分多一个
-     *
+     * 0619 -- 来填坑
      * @param nums1
      * @param nums2
      * @return
      */
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int n = nums1.length;
+        int m = nums2.length;
+        if (nums1.length > nums2.length){
+            return 0.0;
+        }
+        int left = n / 2;
+        int right = m / 2;
+        if (nums1[left] < nums2[right]){
+
+        }else {
+
+        }
+
+
+
         return 0.0;
     }
 
