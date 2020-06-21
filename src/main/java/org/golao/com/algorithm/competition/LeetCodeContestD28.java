@@ -75,46 +75,52 @@ public class LeetCodeContestD28 {
 
     /**
      * 4
-     * 0615 补
+     * 0620 补
+     * 题解 ： 1. 问题的本质是把一个数组分成k 段，求和最小的的分法
+     *         2. 假设 k=1， 那么k点设置在数组的中位数时，绝对值和最小
+     *         3. dp[i][j] 代表 i个元素，分成k段的绝对值和最小
+     *         4. dp[i][j] 是从 dp[k][j-1] 转移而来，dp[k][j-1] 表示前面，j-1 段中，
+     *            有j-1 至 i-1个元素，k ∈ [j-1,i-1]  ->  k-1 ∈ [j,i];再加上j点负责
+     *            的段的绝对值和 -> rec[k][i]  (表示从k到i，放一个邮箱的距离和)
+     *         5. dp[i][j] = Min(dp[i][j], dp[k-1][j-1] + rce[k][j]) for(k-1 ∈ [j,i])
+     *         6. rec[k][i] 可以进行预处理
+     *         7. 起始值-- 二维dp的初始化，往往是一个数组 dp[i][1] = rec[0][i]; for range 0 i
+     *         8. 返回最后的 dp[i][j]
      * @param houses
      * @param k
      * @return
      */
     public int minDistance(int[] houses, int k) {
         Arrays.sort(houses);
-        int[][][] dp = new int[houses.length][k][2];
-        int[][] state = new int[houses.length][k];
-        for (int i = 0; i < houses.length; i++) {
-            for (int j = 1; j < k; j++) {
-                int dp00 = dp[i-1][j][0] + houses[i] - houses[state[i-1][j]];
-                int dp01 = dp[i-1][j][1] + houses[i] - houses[i-1];
-                if (dp00 < dp01){
-                    dp[i][j][0] = dp00;
-                    state[i][j] = state[i-1][j];
-                }else {
-                    dp[i][j][0] = dp01;
-                    state[i][j] = i-1;
+        int INF = (int)1e9;
+        int n = houses.length;
+        int[][] rec = new int[n][n];
+        //预处理 rec 数组，计算两点之间的放置一个邮箱的绝对值和
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                int mid = i + j >> 1;
+                for (int s = i; s <= j ; s++) {
+                    rec[i][j] += Math.abs(houses[s] - houses[mid]);
                 }
-                int dp11 = dp[i-1][j-1][1];
-                int dp10 = dp[i-1][j-1][0] + lessDistans(houses, state[i-1][j-1], i);
-                dp[i][j][1] = Math.min(dp10, dp11);
             }
         }
-        return dp[houses.length-1][k-1][1];
-    }
-
-    private int lessDistans(int[] house, int start, int end){
-        int sum = 0;
-        if (start < 0){
+        int[][] dp = new int[n][k+1]; //
+        for (int[] dp1 : dp) {
+            Arrays.fill(dp1, INF);
         }
-        for (int i = start + 1; i < end; i++) {
-            int e1 = house[end] - house[i];
-            int s1 = house[i] - house[start];
-            if (e1 < s1){
-                sum += e1 - s1;
+        // 初始化起始值 dp[i][1]
+        for (int i = 0; i < n; i++) {
+            dp[i][1] = rec[0][i];
+        }
+        //开始推导
+        for (int i = 1; i < n; i++) {
+            for (int j = 2; j <=Math.min(i+1, k); j++) { //如果邮箱超过house个数，再多也只会是0
+                for (int s = j-1; s <= i; s++) { //j从1开始计算，要多减一
+                    dp[i][j] = Math.min(dp[i][j], dp[s-1][j-1] + rec[s][i]);
+                }
             }
         }
-        return sum;
+        return dp[n-1][k];
     }
 
 
