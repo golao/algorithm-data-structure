@@ -1,8 +1,13 @@
 package org.golao.com.n2020;
 
+import org.golao.com.algorithm.competition.LeetCodeContest194;
 import org.golao.com.algorithm.competition.LeetCodeContestD28;
 import org.junit.Assert;
 import org.junit.Test;
+import org.omg.PortableInterceptor.INACTIVE;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class LeetCode0620Test {
     private LeetCodeContestD28 leetCodeContestD28 = new LeetCodeContestD28();
@@ -27,4 +32,44 @@ public class LeetCode0620Test {
             System.out.println(result);
         }
     }
+    private LeetCodeContest194 leetCodeContest194 = new LeetCodeContest194();
+    @Test
+    public void test194_1(){
+        int xorOperation = leetCodeContest194.xorOperation(5, 0);
+        System.out.println(xorOperation);
+    }
+    @Test
+    public void test194_2(){
+        String[][] input = {{"kaido","kaido(1)","kaido","kaido(1)","kaido(2)"},{"pes","fifa","gta","gta(1)","gta(3)","gta","pes(2019)"},{"gta","gta(1)","gta","avalon"}
+        ,{"kaido","kaido(1)","kaido","kaido(1)"}};
+        String[][] output = {{"kaido","kaido(1)","kaido(2)","kaido(1)(1)","kaido(2)(1)"},{"pes","fifa","gta","gta(1)","gta(3)","gta(2)","pes(2019)"},{"gta","gta(1)","gta(2)","avalon"},
+                {"kaido","kaido(1)","kaido(2)","kaido(1)(1)"}};
+        for (int i = 0; i < input.length; i++) {
+            String[] folderNames = leetCodeContest194.getFolderNames(input[i]);
+            Assert.assertArrayEquals(output[i],input[i]);
+        }
+    }
+
+    @Test
+    public void test194_3(){
+        int[][] input = {{1,2,3,4},{1,2,0,0,2,1},{1,2,0,1,2},{69,0,0,0,69},{10,20,20}};
+        int[][] ans = {{-1,-1,-1,-1},{-1,-1,2,1,-1,-1},{},{-1,69,1,1,-1},{}};
+        for (int i = 0; i < ans.length; i++) {
+            int[] avoidFlood = leetCodeContest194.avoidFlood(input[i]);
+            Assert.assertArrayEquals(ans[i], avoidFlood);
+        }
+    }
+
+    private LeetCode0621 leetCode0621 = new LeetCode0621();
+    @Test
+    public void testPathSum(){
+        String[] input = {"[1,2,3]","[-10,9,20,null,null,15,7]"};
+        int[] ans = {6,42};
+        for (int i = 0; i < ans.length; i++) {
+            TreeNode node = TreeNode.parseStr(input[i]);
+            int result = leetCode0621.maxPathSum(node);
+            Assert.assertEquals(ans[i],result);
+        }
+    }
+
 }
