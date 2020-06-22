@@ -71,5 +71,19 @@ public class LeetCode0620Test {
             Assert.assertEquals(ans[i],result);
         }
     }
+    @Test
+    public void testPattern(){
+        String[] patterns = {"bbbaa","abba","abba","abba","aaaa"};
+        String[] values = {"xxxxxx","dogcatcatdog","dogcatcatfish","dogdogdogdog", "dogcatcatdog"};
+        boolean[] ans = {true,true,false,true,false};
+        for (int i = 0; i < ans.length; i++) {
+            boolean result = leetCode0621.patternMatching(patterns[i], values[i]);
+            Assert.assertEquals(ans[i], result);
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("".equals(null));
+    }
 
 }
