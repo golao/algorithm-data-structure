@@ -143,6 +143,11 @@ public class LeetCode0621 {
     /**
      * https://leetcode-cn.com/problems/merge-intervals/
      * 编号：56
+     * 题解： 1. 先按区间0号位的大小排序
+     *        2. 按顺序读取比较，如果 cur[1] <= next[0] 说明存在重合区间
+     *        3. cur[1] = Max(cur[1],next[1])
+     *        4. 不重合则是一个新区间，重复2，3,4
+     *        5.
      * medium
      * @param intervals
      * @return
@@ -151,17 +156,17 @@ public class LeetCode0621 {
         if (intervals == null || intervals.length <= 1){
             return intervals;
         }
-        List<int[]> list = new ArrayList<>(Arrays.asList(intervals));
+        LinkedList<int[]> list = new LinkedList<>(Arrays.asList(intervals));
         list.sort((x1,x2) -> x1[0] - x2[0]);
         LinkedList<int[]> ans = new LinkedList<>();
-        ans.add(list.get(0));
-        for (int i = 1; i < list.size(); i++) {
-            int[] ints = list.get(i);
-            int[] compare = ans.getLast();
-            if (ints[0] <= compare[1]){
-                compare[1] = Math.max(ints[1],compare[1]);
+        ans.add(list.removeFirst());
+        while (!list.isEmpty()) {
+            int[] next = list.removeFirst();
+            int[] cur = ans.getLast();
+            if (next[0] <= cur[1]) {
+                cur[1] = Math.max(cur[1],next[1]);
             }else {
-                ans.add(ints);
+                ans.add(next);
             }
         }
         return ans.toArray(new int[ans.size()][2]);
