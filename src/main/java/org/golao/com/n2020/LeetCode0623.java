@@ -246,7 +246,7 @@ public class LeetCode0623 {
      * https://leetcode-cn.com/problems/same-tree/
      * easy
      * 100. 相同的树
-     *
+     * 题解： DFS
      * @param p
      * @param q
      * @return
@@ -264,6 +264,53 @@ public class LeetCode0623 {
         boolean left = isSameTree(p.left,q.left);
         boolean right = isSameTree(p.right,q.right);
         return left && right;
+    }
+
+
+    /**
+     * 一题多解，练习写一个 bfs 实现版本的
+     * @param p
+     * @param q
+     * @return
+     */
+    public boolean isSameTreeBFS(TreeNode p, TreeNode q) {
+        if (!check(p,q)){
+            return false;
+        }
+        Deque<TreeNode> dequeP = new ArrayDeque<>();
+        Deque<TreeNode> dequeQ = new ArrayDeque<>();
+        if (p != null){
+            dequeP.addLast(p);
+            dequeQ.addLast(q);
+        }
+        while (!dequeP.isEmpty()){
+            TreeNode nodeP = dequeP.removeFirst();
+            TreeNode nodeQ = dequeQ.removeFirst();
+            if (!check(nodeP.left,nodeQ.left)){
+                return false;
+            }
+            if (nodeP.left != null){ // 注意 ArrayDeque 不能加 null 值
+                dequeP.addLast(nodeP.left);
+                dequeQ.addLast(nodeQ.left);
+            }
+            if (!check(nodeP.right,nodeQ.right)){
+                return false;
+            }
+            if (nodeP.right != null){
+                dequeP.addLast(nodeP.right);
+                dequeQ.addLast(nodeQ.right);
+            }
+        }
+        return true;
+    }
+    public boolean check(TreeNode n1, TreeNode n2){
+        if (n1 == null && n2 == null){
+            return true;
+        }
+        if (n1 == null || n2 == null){
+            return false;
+        }
+        return n1.val == n2.val;
     }
 
 
