@@ -1,5 +1,8 @@
 package org.golao.com;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import org.golao.com.n2020.ListNode;
 import org.golao.com.n2020.TreeNode;
 
 /**
@@ -16,6 +19,18 @@ public class LeetCodeTestCaseUtil {
     }
     public static String treeNodeToString(TreeNode node){
         return node.toString();
+    }
+
+    public static ListNode parseListNode(String str){
+        JSONArray parse = (JSONArray) JSONObject.parse(str);
+        ListNode preHead = new ListNode(-1);
+        ListNode cur = preHead;
+        for (int i = 0; i < parse.size(); i++) {
+            int o = parse.getIntValue(i);
+            cur.next = new ListNode(o);
+            cur = cur.next;
+        }
+        return preHead.next;
     }
 
 }
