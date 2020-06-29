@@ -1,6 +1,8 @@
 package org.golao.com.n2020;
 
 import org.golao.com.algorithm.competition.LeetCodeContest195;
+import org.golao.com.algorithm.topic.easy.LeetCodeEasyArray;
+import org.golao.com.algorithm.topic.easy.LeetCodeEasyString;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -28,4 +30,37 @@ public class LeetCode0628Test {
             Assert.assertEquals(ans[i],result);
         }
     }
+
+    private LeetCodeEasyArray leetCodeEasyArray = new LeetCodeEasyArray();
+    @Test
+    public void testArray01(){
+        int[][] intput = {{-1,-100,3,99},{1,2,3}};
+        int[][] ans = {{3,99,-1,-100},{3,1,2}};
+        int[] k = {2,1};
+        for (int i = 0; i < k.length; i++) {
+            leetCodeEasyArray.rotate(intput[i],k[i]);
+            Assert.assertArrayEquals(ans[i],intput[i]);
+        }
+    }
+    @Test
+    public void testArray02(){
+        int[][] intput = {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
+        int[][] ans = {{3,99,-1,-100},{3,1,2}};
+        int[] k = {2,1};
+        for (int i = 0; i < k.length; i++) {
+            leetCodeEasyArray.rotate(intput);
+            Assert.assertArrayEquals(ans[i],intput[i]);
+        }
+    }
+
+    private LeetCodeEasyString leetCodeEasyString = new LeetCodeEasyString();
+    @Test
+    public void testString01(){
+        StringBuilder builder = new StringBuilder();
+        builder.append(Integer.MIN_VALUE);
+        "".toCharArray();
+        System.out.println(builder.reverse().toString());
+    }
+
+
 }

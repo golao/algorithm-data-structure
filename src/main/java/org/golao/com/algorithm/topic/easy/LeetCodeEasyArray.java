@@ -51,11 +51,28 @@ public class LeetCodeEasyArray {
      * 189. 旋转数组
      * 题解：如果使用空间 O(n)，本题没有难度
      *      1. 要求使用 O(1) 空间实现，是本题的精髓和难点
-     *      //TODO
+     *      2. 对 k 进行优化，如果 k > nums.length，这个优化有效
+     *      3. 当前元素向前移动 k，将目标位置的值作为下次移动的值临时存储起来
+     *      4. 一个细节：从起点每次移动 k ，是存在最后回到起点的可能的，所以要处理重合情况
+     *      5. 与起点重合后， 向下一位移动，两层循环，但总的时间复杂度依然是 nums.length;
      * @param nums
      * @param k
      */
     public void rotate(int[] nums, int k) {
+        k = k % nums.length;//优化
+        int count = 0;
+        for (int start = 0; count < nums.length; start++) {
+            int cur = start;
+            int pre = nums[start];
+            do{
+                int next = (cur + k) % nums.length;
+                int temp = nums[next];
+                nums[next] = pre;
+                pre = temp;
+                count++;
+                cur = next;
+            }while (start != cur);
+        }
     }
 
     /**
@@ -338,6 +355,29 @@ public class LeetCodeEasyArray {
             }
         }
         return true;
+    }
+
+    /**
+     * https://leetcode-cn.com/problems/rotate-image/
+     * 48. 旋转图像
+     * 思路： 1. 关键是能掌握旋转 90°下一个车元素和上一个元素之间的公式
+     *        2. [x][y] -> [y][n - 1 - x]
+     *        3. 掌握了这个公式后， 元素的交换顺序就清晰了
+     *        4. [x][y] -> [y][n-1-x] -> [n-1-x][n-1-y] -> [n-1-y][n-1-(n-1-x)] = [n-1-y][x]
+     *           -> [x][n-1-(n-1-y)] = [x][y]
+     * @param matrix
+     */
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        for (int i = 0; i < (n + 1) / 2; i++) {
+            for (int j = 0; j < n / 2; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[n-1-j][i];
+                matrix[n-1-j][i] = matrix[n-1-i][n-1-j];
+                matrix[n-1-i][n-1-j] = matrix[j][n-1-i];
+                matrix[j][n-1-i] = temp;
+            }
+        }
     }
 
 
