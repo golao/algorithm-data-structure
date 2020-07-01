@@ -2,8 +2,10 @@ package org.golao.com.algorithm.topic.easy;
 
 import org.golao.com.n2020.TreeNode;
 
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * 专题： 树
@@ -113,6 +115,81 @@ public class LeetCodeEasyTree {
             deque.addLast(r.left);
         }
         return true;
+    }
+
+    /**
+     * https://leetcode-cn.com/problems/binary-tree-level-order-traversal/
+     * medium
+     * 102. 二叉树的层序遍历
+     * 思路： 方法一
+     *          1. 层序遍历，基本就是 BFS
+     *          2. cur 标记当前层，next 标记下一层的节点数
+     *          3. 当 cur 读取完毕时， cur 切换为 next 的值
+     *          4. 判断和交换 cur next 值是，应放在最后操作
+     *          5. 时间复杂度: O(n)
+     *          6. 空间复杂度: O(1) 返回空间不计入复杂度
+     *
+     *         方法二：官方题解
+     *          1. 与方法一类似，但使用了 队列的长度来衡量树层级的节点数，更为简洁和巧妙
+     *          2. while 里层用 for 循环，每次取出同一层的所有节点  i < currentSize
+     *          3. 实现 {@link LeetCodeEasyTree#levelOrderII(TreeNode)}
+     * @param root
+     * @return
+     */
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        if (root == null){
+            return new ArrayList<>();
+        }
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        int cur = 1;
+        int next = 0;
+        Deque<TreeNode> deque = new LinkedList<>();
+        deque.addLast(root);
+        while (!deque.isEmpty()){
+            TreeNode node = deque.removeFirst();
+            cur--;
+            list.add(node.val);
+            if (node.left != null){
+                deque.addLast(node.left);
+                next++;
+            }
+            if (node.right != null){
+                deque.addLast(node.right);
+                next++;
+            }
+            if (cur == 0){
+                cur = next;
+                next = 0;
+                ans.add(list);
+                list = new ArrayList<>();
+            }
+        }
+        return ans;
+    }
+    public List<List<Integer>> levelOrderII(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        if (root == null){
+            return ans;
+        }
+        Deque<TreeNode> deque = new LinkedList<>();
+        deque.addLast(root);
+        while (!deque.isEmpty()){
+            int currentSize = deque.size();
+            List<Integer> list = new ArrayList<>();
+            for (int i = 0; i < currentSize; i++) {
+                TreeNode node = deque.removeFirst();
+                list.add(node.val);
+                if (node.left != null){
+                    deque.addLast(node.left);
+                }
+                if (node.right != null){
+                    deque.addLast(node.right);
+                }
+            }
+            ans.add(list);
+        }
+        return ans;
     }
 
 }
