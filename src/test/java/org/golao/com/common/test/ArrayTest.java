@@ -1,7 +1,7 @@
 package org.golao.com.common.test;
 
-import org.golao.com.n2020.LeetCode0606;
-import org.golao.com.n2020.LeetCode0610;
+import org.golao.com.n2020.m06.LeetCode0606;
+import org.golao.com.n2020.m06.LeetCode0610;
 import org.junit.Test;
 
 /**

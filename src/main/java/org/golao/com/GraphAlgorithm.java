@@ -46,8 +46,7 @@ public class GraphAlgorithm {
         visited[i] = true;
         System.out.println(graph.vexs[i]);
         for (int j = 0;j < graph.numVertexes;j++){
-            if (graph.arc[
-                    i][j] == 1 && !visited[j]){
+            if (graph.arc[i][j] == 1 && !visited[j]){
                 DFS(graph,j,visited);
             }
         }
