@@ -136,7 +136,57 @@ public class LeetCodeEasyString {
         return true;
     }
 
-
-
-
+    public String countAndSay(int n) {
+        String s = "1";
+        for(int i = 1; i < n; i++){
+            StringBuilder next = new StringBuilder();
+            char cur = s.charAt(0);
+            int count = 0;
+            for(int j = 0; j < s.length(); j++){
+                if(cur == s.charAt(j)){
+                    count++;
+                }else{
+                    next.append(count);
+                    next.append(cur);
+                    cur = s.charAt(j);
+                    count = 1;
+                }
+            }
+            next.append(count);
+            next.append(cur);
+            s = next.toString();
+        }
+        return s;
     }
+
+    /**
+     * https://leetcode-cn.com/problems/implement-strstr/
+     * 28. 实现 strStr()
+     * 思路：  1. 两层循环，needle 逐个进行匹配
+     *         2. 实现匹配则返回位置
+     *         3. 时间复杂度: O(n + m)
+     *         4. 空间复杂度: O(1)
+     * @param haystack
+     * @param needle
+     * @return
+     */
+    public int strStr(String haystack, String needle) {
+        int len = haystack.length() - needle.length() + 1;
+        for (int i = 0; i < len; i++) {
+            boolean match = true;
+            for (int j = 0; j < needle.length(); j++) {
+                if (needle.charAt(j) != haystack.charAt(i+j)){
+                    match = false;
+                    break;
+                }
+            }
+            if (match){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+
+}

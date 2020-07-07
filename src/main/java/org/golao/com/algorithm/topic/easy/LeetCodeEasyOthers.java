@@ -265,4 +265,30 @@ public class LeetCodeEasyOthers {
         }
         return sum;
     }
+
+
+    /**
+     * https://leetcode-cn.com/problems/reverse-bits
+     * 190. 颠倒二进制位
+     * 知识点：    1. Java中 位操作  >> 是带符号右移，正数高位补 0 ，负数高位补 1
+     *             2. 所以，如果不使用无符号位移 >>> ，n 始终为 -1 ，无法跳出循环
+     *             3. TODO 位操作的知识，比较弱，有待加强
+     *         方法二： 分治法，两两交换后合并  n = (n >>> 16) | (n << 16) ...
+     *  进阶学习： https://www.cnblogs.com/zhangziqiu/archive/2011/03/30/ComputerCode.html
+     *
+     * @param n
+     * @return
+     */
+    public int reverseBits(int n) {
+        int power = 31;
+        int ans = 0;
+        while(n != 0){
+            ans += (n & 1) << power;
+            power--;
+//            n = n >> 1;
+            n = n >>> 1;
+        }
+        return ans;
+    }
+
 }

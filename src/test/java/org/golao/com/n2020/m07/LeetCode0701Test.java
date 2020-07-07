@@ -4,6 +4,8 @@ import org.golao.com.algorithm.topic.easy.LeetCodeEasyOthers;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.*;
+
 public class LeetCode0701Test {
     private LeetCode0701 leetCode0701 = new LeetCode0701();
     @Test
@@ -48,12 +50,40 @@ public class LeetCode0701Test {
         Integer a = 1;
     }
 
-    @Test
+    @Test(timeout = 1000)
     public void testBit(){
-        Integer a = 1;
-        
-        System.out.println(Integer.toBinaryString(a));
+        Integer a = -3;
+        int i = leetCodeEasyOthers.reverseBits(a);
+        System.out.println(Integer.toUnsignedString(i,2));
+        //   System.out.println(Integer.toBinaryString(a));
     }
 
+    @Test
+    public void testInt(){
+        int INF = (int)-1e8;
+        System.out.println(INF);
+        System.out.println(2 << 1);
+        int left = Integer.MAX_VALUE, right = Integer.MAX_VALUE;
+        System.out.println(left - Integer.MIN_VALUE);
+        System.out.println(left + Integer.MIN_VALUE);
+        System.out.println(left + right);
+        System.out.println(left);
+        System.out.println(left % 2);
+    }
+
+    private LeetCode0702 leetCode0702 = new LeetCode0702();
+    @Test(timeout = 1000)
+    public void testKsmall(){
+        int[][][] input = {
+                {{4,5},{4,5}},
+                {{-5,-4},{-5,-4}},
+        };
+        int[] k = {3,3};
+        int[] ans = {5,-4};
+        for (int i = 0; i < ans.length; i++) {
+            int result = leetCode0702.kthSmallest(input[i], k[i]);
+            Assert.assertEquals(ans[i], result);
+        }
+    }
 
 }

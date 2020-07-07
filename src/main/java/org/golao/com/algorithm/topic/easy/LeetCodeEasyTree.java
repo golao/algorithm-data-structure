@@ -192,4 +192,28 @@ public class LeetCodeEasyTree {
         return ans;
     }
 
+    /**
+     * https://leetcode-cn.com/problems/convert-sorted-array-to-binary-search-tree/
+     * 108. 将有序数组转换为二叉搜索树
+     * 思路：  1. 中序遍历，选择中间的点创建节点
+     *         2. 递归创建左右子节点
+     *         3. 时间复杂度: O(n)
+     *         4. 空间复杂度: O(n)
+     * @param nums
+     * @return
+     */
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return createNode(nums, 0, nums.length - 1);
+    }
+    private TreeNode createNode(int[] nums, int left, int right){
+        if (left > right){
+            return null;
+        }
+        int mid = left + (right - left) / 2;
+        TreeNode root = new TreeNode(nums[mid]);
+        root.left = createNode(nums, left, mid - 1);
+        root.right = createNode(nums, mid + 1, right);
+        return root;
+    }
+
 }
